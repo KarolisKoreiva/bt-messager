@@ -20,6 +20,8 @@ public class MessageService {
         MessageEntity entity = new MessageEntity();
 
         entity.setMessage(message.getMessage());
+        entity.setRecipientId(message.getRecipientId());
+        entity.setSenderId(message.getSenderId());
 
         messageRepository.save(entity);
     }
@@ -27,19 +29,7 @@ public class MessageService {
     public List<Message> fetchMessages() {
         List<MessageEntity> messages = (List<MessageEntity>) messageRepository.findAll();
 
-        List<Message> messageList = new ArrayList<>();
-
-        for(MessageEntity message: messages) {
-            Message newMessage = new Message();
-
-            newMessage.setMessage(message.getMessage());
-
-            messageList.add(newMessage);
-        }
-
-        return messages.stream()
-                .map(Message::new)
-                .collect(Collectors.toList());
+        return messages.stream().map(Message::new).collect(Collectors.toList());
 
     }
 }
