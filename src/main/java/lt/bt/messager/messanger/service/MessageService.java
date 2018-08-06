@@ -16,14 +16,17 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public void createMessage(Message message) {
+    @Autowired
+    private UserService userService;
+
+    public MessageEntity createMessage(Message message) {
         MessageEntity entity = new MessageEntity();
 
         entity.setMessage(message.getMessage());
         entity.setRecipientId(message.getRecipientId());
-        entity.setSenderId(message.getSenderId());
+        entity.setSenderId(userService.getCurrentUserId());
 
-        messageRepository.save(entity);
+        return messageRepository.save(entity);
     }
 
     public List<Message> fetchMessages() {

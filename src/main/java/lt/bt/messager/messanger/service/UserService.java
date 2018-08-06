@@ -4,6 +4,8 @@ import lt.bt.messager.messanger.dto.User;
 import lt.bt.messager.messanger.entity.UserEntity;
 import lt.bt.messager.messanger.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<User> getUsers() {
 
@@ -26,9 +30,19 @@ public class UserService {
     public void createUser(User user) {
 
         UserEntity userEntity = new UserEntity();
-        userEntity.setName(user.getName());
+        userEntity.setFirstname(user.getFirstname());
+        userEntity.setLastname(user.getLastname());
+        userEntity.setUsername(user.getUsername());
+        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(userEntity);
 
+    }
+
+    public Long getCurrentUserId() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity userEntity = userRepository.findByUsername(username);
+
+        return userEntity.getUserId();
     }
 }

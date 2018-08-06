@@ -1,5 +1,7 @@
 package lt.bt.messager.messanger.entity;
 
+import lt.bt.messager.messanger.dto.Message;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,14 @@ public class MessageEntity {
     private Long recipientId;
 
     private Long senderId;
+
+    public MessageEntity() {}
+
+    public MessageEntity(Message message) {
+        setSenderId(message.getSenderId());
+        setRecipientId(message.getRecipientId());
+        setMessage(message.getMessage());
+    }
 
     public Long getSenderId() {
         return senderId;

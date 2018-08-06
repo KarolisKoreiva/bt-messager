@@ -1,6 +1,7 @@
 package lt.bt.messager.messanger.controller;
 
 import lt.bt.messager.messanger.dto.Message;
+import lt.bt.messager.messanger.entity.MessageEntity;
 import lt.bt.messager.messanger.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,8 @@ public class MessageController {
     @ResponseStatus(HttpStatus.CREATED)
     public Message createMessage(@RequestBody Message message) {
 
-        messageService.createMessage(message);
+        MessageEntity messageEntity = messageService.createMessage(message);
 
-        return message;
+        return new Message(messageEntity);
     }
 }
