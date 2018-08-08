@@ -1,5 +1,6 @@
 package lt.bt.messager.messanger.dto;
 
+import lt.bt.messager.messanger.entity.ChannelEntity;
 import lt.bt.messager.messanger.entity.MessageEntity;
 
 import javax.persistence.ManyToOne;
@@ -12,12 +13,23 @@ public class Message {
 
     private Long senderId;
 
+    private ChannelEntity channelId;
+
     public Message() {}
 
     public Message (MessageEntity entity) {
         setMessage(entity.getMessage());
         setRecipientId(entity.getRecipientId());
         setSenderId(entity.getSenderId());
+        setChannelId(entity.getChannelId());
+    }
+
+    public ChannelEntity getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(ChannelEntity channelId) {
+        this.channelId = channelId;
     }
 
     public Long getRecipientId() {

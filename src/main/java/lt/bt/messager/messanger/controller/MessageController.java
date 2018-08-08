@@ -23,7 +23,6 @@ public class MessageController {
         return messageService.fetchMessages();
     }
 
-
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Message createMessage(@RequestBody Message message) {
@@ -32,4 +31,11 @@ public class MessageController {
 
         return new Message(messageEntity);
     }
+
+    @RequestMapping("/myMessages")
+    public List<Message> getCurrentUserMessages() {
+
+        return messageService.fetchCurrentUserMessages();
+    }
+
 }
